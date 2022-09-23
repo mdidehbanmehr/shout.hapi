@@ -7,7 +7,7 @@ const controller = new ShoutController();
 
 const userSchema = Joi.object({
   author: Joi.string().required(),
-  email: Joi.string().required(),
+  email: Joi.string().email().required(),
   message: Joi.string().required(),
 });
 
