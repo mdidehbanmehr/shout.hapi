@@ -3,6 +3,9 @@ import Boom from "@hapi/boom";
 import { User } from "./auth";
 import { authService } from "./authService";
 
+
+const service = new authService()
+
 export class AuthController {
   public async login(request: Hapi.Request, h: Hapi.ResponseToolkit) {
     if (!request.auth.isAuthenticated) {
@@ -15,7 +18,7 @@ export class AuthController {
       email: user.raw.email,
       picture: user.raw.picture,
     };
-    await new authService().registerUser(data);
+    await service.registerUser(data);
     request.cookieAuth.set(data); // <-- new line to set the session cookie
     
     return h.response("Successfully logged In").code(200);
@@ -23,7 +26,7 @@ export class AuthController {
 
   public async getUser(request: Hapi.Request, h: Hapi.ResponseToolkit) {
     try {
-      const result = await new authService().getUser(request, h);
+      const result = await service.getUser(request, h);
       return h.response(result).code(200);
     } catch (error) {
       request.log("error");
