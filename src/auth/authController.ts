@@ -17,14 +17,24 @@ export class AuthController {
     };
     await new authService().registerUser(data);
     request.cookieAuth.set(data); // <-- new line to set the session cookie
-    return h.response(data).code(200);
-
+    
+    return h.response("Successfully logged In").code(200);
   }
 
   public async getUser(request: Hapi.Request, h: Hapi.ResponseToolkit) {
     try {
       const result = await new authService().getUser(request, h);
       return h.response(result).code(200);
+    } catch (error) {
+      request.log("error");
+      return Boom.badImplementation(JSON.stringify(error));
+    }
+  }
+
+  public async logOut(request: Hapi.Request, h: Hapi.ResponseToolkit) {
+    try {
+      request.cookieAuth.clear()
+      return h.response("logged out successfuly").code(200);
     } catch (error) {
       request.log("error");
       return Boom.badImplementation(JSON.stringify(error));

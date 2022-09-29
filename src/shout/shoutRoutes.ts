@@ -44,6 +44,27 @@ export const shoutRoutes = {
           tags: ["api"],
         },
       },
+      {
+        method: ["DELETE"], // Must handle both GET and POST
+        path: "/delete-comment-by{id}", // The callback endpoint registered with the
+        handler: controller.removeComment,
+        options: {
+          auth: "session",
+          tags: ["api"],
+          plugins: {
+            "hapi-swagger": {},
+          },
+          validate: {
+            params: Joi.object({
+              id: Joi.number(),
+            }),
+            failAction: async (request, h, err) => {
+              console.log(err);
+              throw err;
+            },
+          },
+        },
+      },
     ]);
   },
 };

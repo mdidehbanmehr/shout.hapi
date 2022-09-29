@@ -35,7 +35,19 @@ export const authRoutes = {
             "hapi-swagger": {},
           },
         },
-      }
+      },
+      {
+        method: ["Delete"], // Must handle both GET and POST
+        path: "/logOut", // The callback endpoint registered with the
+        handler: controller.logOut,
+        options: {
+          auth: "session",
+          tags: ["api"],
+          plugins: {
+            "hapi-swagger": {},
+          },
+        },
+      },
     ]);
   },
 };

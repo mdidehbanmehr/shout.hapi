@@ -1,5 +1,7 @@
-import { Prisma, PrismaClient } from "@prisma/client";
-import { Shout } from "./shout";
+import { Prisma, PrismaClient, Shout } from "@prisma/client";
+import { User } from "../auth/auth";
+// import { Shout } from "./shout";
+import Boom from "@hapi/boom";
 
 export class ShoutService {
   private prisma: PrismaClient;
@@ -18,5 +20,22 @@ export class ShoutService {
     return await this.prisma.shout.findMany({
       orderBy: [{ updatedAt: "asc" }],
     });
+  }
+
+  public async removeComment(
+    commentId: number,
+    userEmail: User["raw"]["email"]
+  ) {
+    const user = await this.prisma.user.findUnique({ where: { email: userEmail } });
+    if(user?.role !== "Admin"){
+      return  Boom.forbidden("Resource only available to admin");
+    }else{
+      try {
+        return await this.prisma.shout.delete({where:{id: commentId}})
+      } catch (error) {
+        return Boom.notFound("comment with this id doens't exist")
+        
+      }
+    }
   }
 }

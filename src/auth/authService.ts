@@ -17,7 +17,6 @@ export class authService {
   }
 
   public async registerUser(user: User["raw"]){
-    console.log(user.email);
     await this.prisma.user.upsert({
       create: { email: user.email },
       update: { email: user.email },

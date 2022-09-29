@@ -1,6 +1,6 @@
 export interface Shout {
     id: number;
-    profilPicture?: string;
+    profilePicture?: string;
     email: string;
     author: string;
     message: string;
@@ -11,7 +11,7 @@ export interface Shout {
 
 export interface CreateShout {
     id: number;
-    profilPicture?: string;
+    profilePicture?: string;
 
     email: string;
     author: string;
@@ -20,7 +20,7 @@ export interface CreateShout {
 
 export interface UpdateShout {
     author: string;
-    profilPicture?: string;
+    profilePicture?: string;
     message: string;
     updatedAt: Date;
 }

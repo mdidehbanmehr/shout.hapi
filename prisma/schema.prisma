@@ -23,7 +23,7 @@ model Shout {
 model User {
   id        Int      @id @default(autoincrement())
   role      String   @default("user")
-  email     String
+  email     String   @unique
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now())
 }
