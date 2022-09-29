@@ -37,7 +37,7 @@ export const authRoutes = {
         },
       },
       {
-        method: ["Delete"], // Must handle both GET and POST
+        method: ["Post"], // Must handle both GET and POST
         path: "/logOut", // The callback endpoint registered with the
         handler: controller.logOut,
         options: {
