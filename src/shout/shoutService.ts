@@ -1,7 +1,7 @@
 import { Prisma, PrismaClient } from "@prisma/client";
 import { Shout } from "./shout";
 
-export class UserService {
+export class ShoutService {
   private prisma: PrismaClient;
 
   constructor() {
@@ -15,6 +15,8 @@ export class UserService {
   }
 
   public async getAll(): Promise<Shout[]> {
-    return await this.prisma.shout.findMany();
+    return await this.prisma.shout.findMany({
+      orderBy: [{ updatedAt: "asc" }],
+    });
   }
 }

@@ -9,10 +9,11 @@ const userSchema = Joi.object({
   author: Joi.string().required(),
   email: Joi.string().email().required(),
   message: Joi.string().required(),
+  profilePicture: Joi.string(),
 });
 
 // configure the routes
-const userRoutes = {
+export const shoutRoutes = {
   name: "users",
   register: async (server: Hapi.Server) => {
     server.route([
@@ -25,6 +26,7 @@ const userRoutes = {
           plugins: {
             "hapi-swagger": {},
           },
+          auth: "session",
           validate: {
             payload: userSchema,
             failAction: async (request, h, err) => {
@@ -45,5 +47,3 @@ const userRoutes = {
     ]);
   },
 };
-
-export default userRoutes;
