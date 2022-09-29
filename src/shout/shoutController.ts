@@ -28,14 +28,9 @@ export class ShoutController {
     }
   }
   public async removeComment(request: Hapi.Request, h: Hapi.ResponseToolkit) {
-    // try {
       const commentId  = request.params.id
       const user = request.state.auth
       const result = await service.removeComment(commentId, user.email);
       return result
-    // } catch (error) {
-    //   request.log("error");
-    //   return Boom.badImplementation(JSON.stringify(error));
-    // }
   }
 }
